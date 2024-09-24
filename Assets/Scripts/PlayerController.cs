@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rigidBody2D;
     private CircleCollider2D circleCollider2D;
     [SerializeField] private LayerMask groundLayer;
-    [Range(0, 40f)] [SerializeField] private float speed = 10;
+    [Range(0, 60f)] [SerializeField] private float speed = 25;
     [Range(0, 5f)][SerializeField] private float fallLongMult = 0.85f;
     [Range(0, 5f)][SerializeField] private float fallShortMult = 1.55f;
     float moveX = 0f;
