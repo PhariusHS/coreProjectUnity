@@ -17,6 +17,13 @@ public class PlayerController : MonoBehaviour
 
     
 
+    //Is the character touching ground?
+    private bool isGrounded()
+    {
+        RaycastHit2D hit = Physics2D.CircleCast(circleCollider2D.bounds.center, circleCollider2D.radius, Vector2.down, 0.1f, groundLayer);
+        return hit.collider != null;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -71,6 +78,8 @@ public class PlayerController : MonoBehaviour
         transformScale.x *= -1;
         transform.localScale= transformScale;
     }
+
+
 
 
 
