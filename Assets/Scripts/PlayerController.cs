@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 
 public class PlayerController : MonoBehaviour
 {
@@ -19,10 +21,12 @@ public class PlayerController : MonoBehaviour
 
 
 
+
     //Is the character touching ground?
     private bool IsGrounded()
     {
-        RaycastHit2D hit = Physics2D.BoxCast(boxCollider2D.bounds.center, boxCollider2D.bounds.size, 0f, Vector2.down, 0.1f, groundLayer);
+        float extraHeight = 0.2f;  // Aumenta la distancia para mejorar la detección
+        RaycastHit2D hit = Physics2D.BoxCast(boxCollider2D.bounds.center, boxCollider2D.bounds.size, 0f, Vector2.down, extraHeight, groundLayer);
         return hit.collider != null;
     }
 
@@ -38,6 +42,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+       
+
+        Debug.Log(IsGrounded());
         //Horizontal movement
         moveX = Input.GetAxisRaw("Horizontal") * speed;
 
@@ -47,8 +55,9 @@ public class PlayerController : MonoBehaviour
         else if (IsGrounded() && (moveX > 0 || moveX < 0))
             GetComponent<Animator>().Play("PlayerWalk");
 
-        if (IsGrounded() && Input.GetButtonDown("Jump"))
+        if ( Input.GetKeyDown(KeyCode.Space) && IsGrounded())
         {
+           
             jump = true;
         }
 
@@ -71,8 +80,7 @@ public class PlayerController : MonoBehaviour
         //Jumping
        if(jump)
         {
-
-            rigidBody2D.AddForce(Vector2.up * jumpVelocity, ForceMode2D.Impulse); // Añade un impulso para saltar
+            rigidBody2D.velocity = Vector2.up * jumpVelocity;
             jump = false;
         }
     }
